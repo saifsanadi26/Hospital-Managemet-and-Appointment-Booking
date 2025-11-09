@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { medicalRecordAPI } from '../services/api';
-import { FileText, User, Calendar } from 'lucide-react';
+import { appointmentAPI } from '../services/api';
+import { FileText, User, Calendar, Plus } from 'lucide-react';
 import './MedicalRecords.css';
 
 const MedicalRecords = () => {
@@ -9,10 +10,25 @@ const MedicalRecords = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [appointments, setAppointments] = useState([]);
+  const [formData, setFormData] = useState({
+    patient_id: '',
+    appointment_id: '',
+    diagnosis: '',
+    prescription: '',
+    treatment: '',
+    notes: '',
+    record_date: new Date().toISOString().split('T')[0]
+  });
 
   useEffect(() => {
     fetchRecords();
+    if (user.role === 'doctor') {
+      fetchAppointments();
+    }
   }, []);
 
   const fetchRecords = async () => {
@@ -24,6 +40,53 @@ const MedicalRecords = () => {
       setError(err.response?.data?.message || 'Failed to load medical records');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchAppointments = async () => {
+    try {
+      const response = await appointmentAPI.getAll();
+      const completedAppts = response.data.data.filter(apt => apt.status === 'completed');
+      setAppointments(completedAppts);
+    } catch (err) {
+      console.error('Failed to load appointments');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Auto-fill patient_id when appointment is selected
+    if (name === 'appointment_id' && value) {
+      const selectedApt = appointments.find(apt => apt.id === parseInt(value));
+      if (selectedApt) {
+        setFormData(prev => ({ ...prev, patient_id: selectedApt.patient_id }));
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    
+    try {
+      await medicalRecordAPI.create(formData);
+      setSuccess('Medical record created successfully!');
+      setShowCreateForm(false);
+      setFormData({
+        patient_id: '',
+        appointment_id: '',
+        diagnosis: '',
+        prescription: '',
+        treatment: '',
+        notes: '',
+        record_date: new Date().toISOString().split('T')[0]
+      });
+      fetchRecords();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to create medical record');
     }
   };
 
@@ -40,9 +103,113 @@ const MedicalRecords = () => {
       <div className="page-header">
         <h1>Medical Records</h1>
         <p>View your medical history and treatment records</p>
+        {user.role === 'doctor' && (
+          <button 
+            className="btn btn-primary"
+            onClick={() => setShowCreateForm(!showCreateForm)}
+            style={{ marginTop: '10px' }}
+          >
+            <Plus size={20} style={{ marginRight: '8px' }} />
+            {showCreateForm ? 'Cancel' : 'Create New Record'}
+          </button>
+        )}
       </div>
 
       {error && <div className="alert alert-error">{error}</div>}
+      {success && <div className="alert alert-success">{success}</div>}
+
+      {showCreateForm && user.role === 'doctor' && (
+        <div className="card" style={{ marginBottom: '24px' }}>
+          <h3>Create Medical Record</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Select Appointment (Completed)</label>
+              <select
+                name="appointment_id"
+                value={formData.appointment_id}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Choose an appointment...</option>
+                {appointments.map(apt => (
+                  <option key={apt.id} value={apt.id}>
+                    {apt.patient_name} - {new Date(apt.appointment_date).toLocaleDateString()} at {apt.appointment_time}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Record Date</label>
+              <input
+                type="date"
+                name="record_date"
+                value={formData.record_date}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Diagnosis *</label>
+              <textarea
+                name="diagnosis"
+                value={formData.diagnosis}
+                onChange={handleInputChange}
+                placeholder="Enter diagnosis..."
+                rows="3"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Prescription</label>
+              <textarea
+                name="prescription"
+                value={formData.prescription}
+                onChange={handleInputChange}
+                placeholder="Enter prescription details..."
+                rows="3"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Treatment</label>
+              <textarea
+                name="treatment"
+                value={formData.treatment}
+                onChange={handleInputChange}
+                placeholder="Enter treatment plan..."
+                rows="3"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Additional Notes</label>
+              <textarea
+                name="notes"
+                value={formData.notes}
+                onChange={handleInputChange}
+                placeholder="Any additional notes..."
+                rows="2"
+              />
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button type="submit" className="btn btn-primary">
+                Create Record
+              </button>
+              <button 
+                type="button" 
+                className="btn btn-secondary"
+                onClick={() => setShowCreateForm(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
       {records.length === 0 ? (
         <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
