@@ -2,7 +2,7 @@
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 1.2rem 0;
+  padding: 1.4rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -20,7 +20,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 800;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
@@ -28,6 +28,8 @@
   background-clip: text;
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .navbar-menu {
@@ -41,8 +43,8 @@
   color: #1e293b;
   text-decoration: none;
   font-weight: 600;
-  font-size: 15px;
-  padding: 8px 12px;
+  font-size: 17px;
+  padding: 10px 16px;
   border-radius: 10px;
   transition: all 0.3s ease;
   font-family: 'Poppins', sans-serif;
@@ -68,16 +70,16 @@
 .user-name {
   font-weight: 700;
   color: #1f2937;
-  font-size: 15px;
+  font-size: 17px;
   font-family: 'Poppins', sans-serif;
 }
 
 .user-role {
-  padding: 6px 12px;
+  padding: 8px 14px;
   background-color: #dbeafe;
   color: #1e40af;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   text-transform: capitalize;
   font-family: 'Inter', sans-serif;
@@ -99,14 +101,41 @@
   background-color: #fee2e2;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+  .navbar-brand {
+    font-size: 1.4rem;
+  }
+  
   .nav-link {
-    font-size: 14px;
-    padding: 6px 10px;
+    font-size: 16px;
+    padding: 8px 14px;
+  }
+  
+  .navbar-menu {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+  
+  .nav-link {
+    font-size: 15px;
+    padding: 8px 12px;
   }
   
   .navbar-menu {
     gap: 12px;
+  }
+  
+  .user-name {
+    font-size: 16px;
+  }
+  
+  .user-role {
+    font-size: 14px;
   }
 }
 
@@ -116,20 +145,20 @@
   }
   
   .nav-link {
-    font-size: 13px;
-    padding: 6px 8px;
+    font-size: 14px;
+    padding: 6px 10px;
   }
   
   .navbar-menu {
-    gap: 8px;
+    gap: 10px;
   }
   
   .user-name {
-    font-size: 14px;
+    font-size: 15px;
   }
   
   .user-role {
-    font-size: 12px;
-    padding: 4px 8px;
+    font-size: 13px;
+    padding: 6px 10px;
   }
 }
