@@ -100,16 +100,32 @@ const MedicalRecords = () => {
 
   return (
     <div className="container" style={{ padding: '40px 20px' }}>
-      <div className="page-header">
-        <h1>Medical Records</h1>
-        <p>View your medical history and treatment records</p>
+      <div className="page-header animate-fadeInUp">
+        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '8px' }}>
+          Medical Records
+        </h1>
+        <p style={{ fontSize: '1.1rem', color: '#1e293b', marginBottom: '24px' }}>
+          View your medical history and treatment records
+        </p>
         {user.role === 'doctor' && (
           <button 
             className="btn btn-primary"
             onClick={() => setShowCreateForm(!showCreateForm)}
-            style={{ marginTop: '10px' }}
+            style={{ 
+              marginTop: '10px',
+              padding: '12px 24px',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              border: 'none',
+              borderRadius: '12px',
+              color: 'white',
+              fontWeight: '600',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'all 0.3s ease'
+            }}
           >
-            <Plus size={20} style={{ marginRight: '8px' }} />
+            <Plus size={20} />
             {showCreateForm ? 'Cancel' : 'Create New Record'}
           </button>
         )}

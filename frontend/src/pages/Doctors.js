@@ -418,8 +418,7 @@ const Doctors = () => {
                       fontWeight: '600',
                       fontSize: '14px'
                     }}>
-                      <DollarSign size={16} />
-                      <span>₹{doctor.consultation_fee}</span>
+                      <span>Consultation Fee: {doctor.consultation_fee}</span>
                     </div>
                   )}
 

@@ -86,9 +86,13 @@ const Appointments = () => {
 
   return (
     <div className="container" style={{ padding: '40px 20px' }}>
-      <div className="page-header">
-        <h1>Appointments</h1>
-        <p>Manage your appointments</p>
+      <div className="page-header animate-fadeInUp">
+        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '8px' }}>
+          Appointments
+        </h1>
+        <p style={{ fontSize: '1.1rem', color: '#1e293b', marginBottom: '32px' }}>
+          Manage your appointments
+        </p>
         
         {/* Filter and Search Controls */}
         <div style={{ 
