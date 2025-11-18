@@ -19,13 +19,10 @@
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 1.6rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  gap: 8px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #4285f4;
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
   white-space: nowrap;
@@ -40,12 +37,12 @@
 }
 
 .nav-link {
-  color: #1e293b;
+  color: #5f6368;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 17px;
-  padding: 10px 16px;
-  border-radius: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 8px;
   transition: all 0.3s ease;
   font-family: 'Poppins', sans-serif;
   white-space: nowrap;
@@ -68,21 +65,21 @@
 }
 
 .user-name {
-  font-weight: 700;
-  color: #1f2937;
-  font-size: 17px;
+  font-weight: 500;
+  color: #5f6368;
+  font-size: 16px;
   font-family: 'Poppins', sans-serif;
 }
 
 .user-role {
-  padding: 8px 14px;
-  background-color: #dbeafe;
-  color: #1e40af;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
+  padding: 6px 12px;
+  background-color: #e8f0fe;
+  color: #1a73e8;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
   text-transform: capitalize;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .btn-logout {
