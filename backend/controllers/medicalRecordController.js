@@ -5,7 +5,7 @@ const { pool } = require('../config/db');
 // @access  Private (Doctor)
 const createMedicalRecord = async (req, res) => {
   try {
-    const { patient_id, appointment_id, diagnosis, prescription, treatment, notes, record_date } = req.body;
+    let { patient_id, appointment_id, diagnosis, prescription, treatment, notes, record_date } = req.body;
     const userId = req.user.id;
 
     // Get doctor_id from user_id
@@ -17,7 +17,19 @@ const createMedicalRecord = async (req, res) => {
 
     const doctor_id = doctors[0].id;
 
+    // If patient_id not provided but appointment_id is, get patient_id from appointment
+    if (!patient_id && appointment_id) {
+      const [appointments] = await pool.query('SELECT patient_id FROM appointments WHERE id = ?', [appointment_id]);
+      if (appointments.length > 0) {
+        patient_id = appointments[0].patient_id;
+      }
+    }
+
     // Verify patient exists
+    if (!patient_id) {
+      return res.status(400).json({ message: 'Patient ID is required' });
+    }
+
     const [patients] = await pool.query('SELECT id FROM patients WHERE id = ?', [patient_id]);
     
     if (patients.length === 0) {

@@ -139,7 +139,7 @@ const Appointments = () => {
               </div>
 
               <div className="appointment-actions">
-                {user.role === 'patient' && appointment.status === 'pending' && (
+                {user.role === 'patient' && (appointment.status === 'pending' || appointment.status === 'confirmed') && (
                   <button
                     className="btn btn-danger btn-sm"
                     onClick={() => handleCancelAppointment(appointment.id)}

@@ -46,8 +46,8 @@ const MedicalRecords = () => {
   const fetchAppointments = async () => {
     try {
       const response = await appointmentAPI.getAll();
-      const completedAppts = response.data.data.filter(apt => apt.status === 'completed');
-      setAppointments(completedAppts);
+      // Show all appointments (not just completed) so doctors can create records
+      setAppointments(response.data.data);
     } catch (err) {
       console.error('Failed to load appointments');
     }
@@ -123,7 +123,7 @@ const MedicalRecords = () => {
           <h3>Create Medical Record</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Select Appointment (Completed)</label>
+              <label>Select Appointment</label>
               <select
                 name="appointment_id"
                 value={formData.appointment_id}
@@ -133,7 +133,7 @@ const MedicalRecords = () => {
                 <option value="">Choose an appointment...</option>
                 {appointments.map(apt => (
                   <option key={apt.id} value={apt.id}>
-                    {apt.patient_name} - {new Date(apt.appointment_date).toLocaleDateString()} at {apt.appointment_time}
+                    {apt.patient_name} - {new Date(apt.appointment_date).toLocaleDateString()} at {apt.appointment_time} ({apt.status})
                   </option>
                 ))}
               </select>
