@@ -101,28 +101,34 @@ const MedicalRecords = () => {
   return (
     <div className="container" style={{ padding: '40px 20px' }}>
       <div className="page-header animate-fadeInUp">
-        <h1 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '8px' }}>
-          Medical Records
-        </h1>
-        <p style={{ fontSize: '1rem', color: '#1e293b', marginBottom: '20px' }}>
-          View your medical history and treatment records
-        </p>
+        <h1>Medical Records</h1>
+        <p>View your medical history and treatment records</p>
         {user.role === 'doctor' && (
           <button 
-            className="btn btn-primary"
+            className="btn"
             onClick={() => setShowCreateForm(!showCreateForm)}
             style={{ 
-              marginTop: '10px',
-              padding: '12px 24px',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              border: 'none',
-              borderRadius: '12px',
+              marginTop: '20px',
+              padding: '14px 28px',
+              background: 'rgba(255, 255, 255, 0.2)',
+              border: '2px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '16px',
               color: 'white',
               fontWeight: '600',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
-              transition: 'all 0.3s ease'
+              gap: '10px',
+              transition: 'all 0.3s ease',
+              backdropFilter: 'blur(10px)',
+              fontSize: '15px'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'rgba(255, 255, 255, 0.3)';
+              e.target.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+              e.target.style.transform = 'translateY(0)';
             }}
           >
             <Plus size={20} />

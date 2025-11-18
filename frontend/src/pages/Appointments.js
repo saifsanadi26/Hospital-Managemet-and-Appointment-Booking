@@ -87,31 +87,38 @@ const Appointments = () => {
   return (
     <div className="container" style={{ padding: '40px 20px' }}>
       <div className="page-header animate-fadeInUp">
-        <h1 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '8px' }}>
-          Appointments
-        </h1>
-        <p style={{ fontSize: '1rem', color: '#1e293b', marginBottom: '24px' }}>
-          Manage your appointments
-        </p>
-        
-        {/* Filter and Search Controls */}
+        <h1>Appointments</h1>
+        <p>Manage your appointments</p>
+      </div>
+
+      {/* Modern Filter Section */}
+      <div className="card animate-fadeIn" style={{
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.3)',
+        marginBottom: '32px',
+        padding: '24px'
+      }}>
         <div style={{ 
           display: 'flex', 
-          gap: '16px', 
-          marginTop: '20px', 
+          gap: '20px', 
           flexWrap: 'wrap',
-          alignItems: 'center'
+          alignItems: 'center',
+          justifyContent: 'center'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <label style={{ fontWeight: '600', color: '#374151' }}>Filter:</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <label style={{ fontWeight: '600', color: '#374151', fontSize: '14px' }}>Filter:</label>
             <select 
               value={filter} 
               onChange={(e) => setFilter(e.target.value)}
               style={{
-                padding: '8px 12px',
-                border: '2px solid #e5e7eb',
-                borderRadius: '8px',
-                fontSize: '14px'
+                padding: '10px 16px',
+                border: '2px solid rgba(102, 126, 234, 0.2)',
+                borderRadius: '12px',
+                fontSize: '14px',
+                background: 'white',
+                fontWeight: '500',
+                minWidth: '140px'
               }}
             >
               <option value="all">All Status</option>
@@ -122,27 +129,31 @@ const Appointments = () => {
             </select>
           </div>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <label style={{ fontWeight: '600', color: '#374151' }}>Search:</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <label style={{ fontWeight: '600', color: '#374151', fontSize: '14px' }}>Search:</label>
             <input
               type="text"
               placeholder={user.role === 'patient' ? 'Search doctors...' : 'Search patients...'}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
-                padding: '8px 12px',
-                border: '2px solid #e5e7eb',
-                borderRadius: '8px',
+                padding: '10px 16px',
+                border: '2px solid rgba(102, 126, 234, 0.2)',
+                borderRadius: '12px',
                 fontSize: '14px',
-                minWidth: '200px'
+                minWidth: '220px',
+                background: 'white'
               }}
             />
           </div>
           
           <div style={{ 
-            color: '#6b7280', 
+            color: '#667eea', 
             fontSize: '14px',
-            fontWeight: '500'
+            fontWeight: '600',
+            padding: '8px 16px',
+            background: 'rgba(102, 126, 234, 0.1)',
+            borderRadius: '12px'
           }}>
             Showing {filteredAppointments.length} of {appointments.length} appointments
           </div>

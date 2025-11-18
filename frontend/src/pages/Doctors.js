@@ -99,19 +99,23 @@ const Doctors = () => {
   return (
     <div className="container" style={{ padding: '40px 20px' }}>
       <div className="page-header animate-fadeInUp">
-        <h1 className="gradient-text" style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '8px' }}>
-          Find Doctors
-        </h1>
-        <p style={{ fontSize: '1rem', color: '#64748b', marginBottom: '24px' }}>
-          Browse our qualified medical professionals
-        </p>
-        
+        <h1>Find Doctors</h1>
+        <p>Browse our qualified medical professionals</p>
+      </div>
+
+      {/* Modern Search & Filter Section */}
+      <div className="card animate-fadeIn" style={{
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.3)',
+        marginBottom: '32px',
+        padding: '32px'
+      }}>
         {/* Enhanced Search Bar */}
         <div style={{ 
           position: 'relative', 
           maxWidth: '600px', 
-          margin: '0 auto',
-          marginBottom: '24px'
+          margin: '0 auto 24px'
         }}>
           <div style={{ position: 'relative' }}>
             <Search 
@@ -121,7 +125,7 @@ const Doctors = () => {
                 left: '16px', 
                 top: '50%', 
                 transform: 'translateY(-50%)',
-                color: '#64748b'
+                color: '#667eea'
               }} 
             />
             <input
@@ -135,8 +139,7 @@ const Doctors = () => {
                 border: '2px solid rgba(102, 126, 234, 0.2)',
                 borderRadius: '16px',
                 fontSize: '16px',
-                background: 'rgba(255, 255, 255, 0.9)',
-                backdropFilter: 'blur(10px)',
+                background: 'white',
                 transition: 'all 0.3s ease',
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
               }}
@@ -156,18 +159,20 @@ const Doctors = () => {
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <button
             onClick={() => setShowFilters(!showFilters)}
+            className="btn"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
               padding: '12px 24px',
-              background: showFilters ? '#667eea' : 'rgba(255, 255, 255, 0.9)',
+              background: showFilters ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'white',
               color: showFilters ? 'white' : '#667eea',
               border: '2px solid #667eea',
               borderRadius: '12px',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              fontWeight: '600'
+              fontWeight: '600',
+              boxShadow: '0 4px 12px rgba(102, 126, 234, 0.2)'
             }}
           >
             <Filter size={18} />
@@ -180,7 +185,7 @@ const Doctors = () => {
           textAlign: 'center', 
           color: '#64748b', 
           fontSize: '14px',
-          fontWeight: '500'
+          fontWeight: '600'
         }}>
           Showing {filteredDoctors.length} of {doctors.length} doctors
         </div>
