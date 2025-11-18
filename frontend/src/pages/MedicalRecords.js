@@ -29,7 +29,7 @@ const MedicalRecords = () => {
     if (user.role === 'doctor') {
       fetchAppointments();
     }
-  }, []);
+  }, [user.role]);
 
   const fetchRecords = async () => {
     try {
