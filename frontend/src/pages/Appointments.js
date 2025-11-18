@@ -7,10 +7,13 @@ import './Appointments.css';
 const Appointments = () => {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState([]);
+  const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [statusUpdate, setStatusUpdate] = useState({ status: '', notes: '' });
+  const [filter, setFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchAppointments();
@@ -21,12 +24,33 @@ const Appointments = () => {
       setLoading(true);
       const response = await appointmentAPI.getAll();
       setAppointments(response.data.data);
+      setFilteredAppointments(response.data.data);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load appointments');
     } finally {
       setLoading(false);
     }
   };
+
+  // Filter and search functionality
+  useEffect(() => {
+    let filtered = appointments;
+
+    // Filter by status
+    if (filter !== 'all') {
+      filtered = filtered.filter(apt => apt.status === filter);
+    }
+
+    // Search by patient/doctor name
+    if (searchTerm) {
+      filtered = filtered.filter(apt => 
+        (apt.patient_name && apt.patient_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (apt.doctor_name && apt.doctor_name.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    }
+
+    setFilteredAppointments(filtered);
+  }, [appointments, filter, searchTerm]);
 
   const handleUpdateStatus = async (appointmentId) => {
     try {
@@ -65,18 +89,90 @@ const Appointments = () => {
       <div className="page-header">
         <h1>Appointments</h1>
         <p>Manage your appointments</p>
+        
+        {/* Filter and Search Controls */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '16px', 
+          marginTop: '20px', 
+          flexWrap: 'wrap',
+          alignItems: 'center'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <label style={{ fontWeight: '600', color: '#374151' }}>Filter:</label>
+            <select 
+              value={filter} 
+              onChange={(e) => setFilter(e.target.value)}
+              style={{
+                padding: '8px 12px',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '14px'
+              }}
+            >
+              <option value="all">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <label style={{ fontWeight: '600', color: '#374151' }}>Search:</label>
+            <input
+              type="text"
+              placeholder={user.role === 'patient' ? 'Search doctors...' : 'Search patients...'}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                padding: '8px 12px',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '14px',
+                minWidth: '200px'
+              }}
+            />
+          </div>
+          
+          <div style={{ 
+            color: '#6b7280', 
+            fontSize: '14px',
+            fontWeight: '500'
+          }}>
+            Showing {filteredAppointments.length} of {appointments.length} appointments
+          </div>
+        </div>
       </div>
 
       {error && <div className="alert alert-error">{error}</div>}
 
-      {appointments.length === 0 ? (
+      {filteredAppointments.length === 0 ? (
         <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
           <Calendar size={48} color="#9ca3af" style={{ margin: '0 auto 16px' }} />
-          <p style={{ color: '#6b7280' }}>No appointments found</p>
+          <p style={{ color: '#6b7280' }}>
+            {appointments.length === 0 ? 'No appointments found' : 'No appointments match your search criteria'}
+          </p>
+          {appointments.length > 0 && (
+            <button 
+              onClick={() => { setFilter('all'); setSearchTerm(''); }}
+              style={{
+                marginTop: '16px',
+                padding: '8px 16px',
+                background: '#3b82f6',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer'
+              }}
+            >
+              Clear Filters
+            </button>
+          )}
         </div>
       ) : (
         <div className="appointments-grid">
-          {appointments.map((appointment) => (
+          {filteredAppointments.map((appointment) => (
             <div key={appointment.id} className="appointment-card">
               <div className="appointment-header">
                 <span className={`badge badge-${appointment.status}`}>

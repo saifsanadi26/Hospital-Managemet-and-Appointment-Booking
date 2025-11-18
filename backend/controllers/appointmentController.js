@@ -167,7 +167,7 @@ const updateAppointment = async (req, res) => {
 
     // Get appointment details first
     const [appointments] = await pool.query(
-      `SELECT a.*, p.user_id as patient_user_id, d.user_id as doctor_user_id 
+      `SELECT a.*, p.user_id as patient_user_id, doc.user_id as doctor_user_id 
        FROM appointments a 
        JOIN patients p ON a.patient_id = p.id 
        JOIN doctors doc ON a.doctor_id = doc.id 
