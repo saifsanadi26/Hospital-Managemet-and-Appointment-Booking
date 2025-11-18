@@ -43,7 +43,7 @@ const PublicRoute = ({ children }) => {
 
 function AppLayout() {
   const location = useLocation();
-  const showFooter = location.pathname === '/dashboard';
+  const showFooter = location.pathname === '/';
 
   return (
     <div className="App">
