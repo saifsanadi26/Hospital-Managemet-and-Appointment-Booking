@@ -103,6 +103,26 @@
   background-color: #fee2e2;
 }
 
+/* Login/Register positioning when not authenticated */
+.navbar-menu > .nav-link:last-of-type {
+  margin-right: 16px;
+}
+
+.navbar-menu > .btn.btn-primary {
+  padding: 8px 20px;
+  background: #4285f4;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.navbar-menu > .btn.btn-primary:hover {
+  background: #3367d6;
+  transform: translateY(-1px);
+}
+
 @media (max-width: 1200px) {
   .navbar-brand {
     font-size: 1.4rem;

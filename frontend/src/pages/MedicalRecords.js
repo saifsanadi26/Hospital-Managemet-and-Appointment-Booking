@@ -102,7 +102,9 @@ const MedicalRecords = () => {
     <div className="container" style={{ padding: '40px 20px' }}>
       <div className="page-header animate-fadeInUp">
         <h1>Medical Records</h1>
-        <p>View your medical history and treatment records</p>
+        <p style={{ fontSize: '1rem', color: '#1e293b', marginBottom: '40px' }}>
+          View your medical history and treatment records
+        </p>
         {user.role === 'doctor' && (
           <button 
             className="btn"
