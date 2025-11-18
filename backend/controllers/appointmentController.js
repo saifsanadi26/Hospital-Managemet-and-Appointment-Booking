@@ -157,20 +157,51 @@ const getAppointment = async (req, res) => {
 
 // @desc    Update appointment status
 // @route   PUT /api/appointments/:id
-// @access  Private (Doctor/Admin)
+// @access  Private (Patient can cancel, Doctor/Admin can update status)
 const updateAppointment = async (req, res) => {
   try {
     const appointmentId = req.params.id;
     const { status, notes } = req.body;
+    const userId = req.user.id;
+    const userRole = req.user.role;
+
+    // Get appointment details first
+    const [appointments] = await pool.query(
+      `SELECT a.*, p.user_id as patient_user_id, d.user_id as doctor_user_id 
+       FROM appointments a 
+       JOIN patients p ON a.patient_id = p.id 
+       JOIN doctors doc ON a.doctor_id = doc.id 
+       WHERE a.id = ?`,
+      [appointmentId]
+    );
+
+    if (appointments.length === 0) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+
+    const appointment = appointments[0];
+
+    // Check permissions
+    if (userRole === 'patient') {
+      // Patients can only cancel their own appointments
+      if (appointment.patient_user_id !== userId) {
+        return res.status(403).json({ message: 'You can only update your own appointments' });
+      }
+      if (status !== 'cancelled') {
+        return res.status(403).json({ message: 'Patients can only cancel appointments' });
+      }
+    } else if (userRole === 'doctor') {
+      // Doctors can update appointments for their patients
+      if (appointment.doctor_user_id !== userId) {
+        return res.status(403).json({ message: 'You can only update appointments with your patients' });
+      }
+    }
+    // Admins can update any appointment
 
     const [result] = await pool.query(
       'UPDATE appointments SET status = ?, notes = ? WHERE id = ?',
       [status, notes || null, appointmentId]
     );
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Appointment not found' });
-    }
 
     res.json({
       success: true,
