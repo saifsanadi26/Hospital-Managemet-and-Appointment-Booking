@@ -87,10 +87,10 @@ const Appointments = () => {
   return (
     <div className="container" style={{ padding: '40px 20px' }}>
       <div className="page-header animate-fadeInUp">
-        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '8px' }}>
+        <h1 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '8px' }}>
           Appointments
         </h1>
-        <p style={{ fontSize: '1.1rem', color: '#1e293b', marginBottom: '32px' }}>
+        <p style={{ fontSize: '1rem', color: '#1e293b', marginBottom: '24px' }}>
           Manage your appointments
         </p>
         

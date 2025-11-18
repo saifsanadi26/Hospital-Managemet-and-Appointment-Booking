@@ -43,9 +43,9 @@ code {
 }
 
 .page-header h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 16px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
@@ -54,7 +54,7 @@ code {
 }
 
 .page-header p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #1e293b;
   font-weight: 500;
   margin-bottom: 0;

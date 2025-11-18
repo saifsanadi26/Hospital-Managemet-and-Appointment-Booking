@@ -99,10 +99,10 @@ const Doctors = () => {
   return (
     <div className="container" style={{ padding: '40px 20px' }}>
       <div className="page-header animate-fadeInUp">
-        <h1 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '8px' }}>
+        <h1 className="gradient-text" style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '8px' }}>
           Find Doctors
         </h1>
-        <p style={{ fontSize: '1.1rem', color: '#64748b', marginBottom: '32px' }}>
+        <p style={{ fontSize: '1rem', color: '#64748b', marginBottom: '24px' }}>
           Browse our qualified medical professionals
         </p>
         
@@ -340,10 +340,10 @@ const Doctors = () => {
               
               <div className="doctor-info" style={{ textAlign: 'center' }}>
                 <h3 style={{ 
-                  fontSize: '1.25rem', 
-                  fontWeight: '700', 
+                  fontSize: '1.1rem', 
+                  fontWeight: '600', 
                   color: '#1e293b', 
-                  marginBottom: '16px',
+                  marginBottom: '12px',
                   fontFamily: 'Poppins'
                 }}>
                   Dr. {doctor.name}
