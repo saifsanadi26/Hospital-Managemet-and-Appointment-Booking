@@ -70,11 +70,11 @@ code {
   position: relative;
   z-index: 2;
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 400;
+  color: #1e293b;
+  font-weight: 500;
   margin-bottom: 0;
   font-family: 'Inter', sans-serif;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.3);
 }
 
 /* Floating Elements */

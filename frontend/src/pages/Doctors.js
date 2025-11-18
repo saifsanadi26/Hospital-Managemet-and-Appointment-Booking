@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { doctorAPI, appointmentAPI } from '../services/api';
-import { User, Stethoscope, Award, DollarSign, Calendar, Search, Filter, Star, MapPin, Clock } from 'lucide-react';
+import { User, Stethoscope, Award, Calendar, Search, Filter, Clock } from 'lucide-react';
 import './Doctors.css';
 
 const Doctors = () => {
@@ -29,7 +29,7 @@ const Doctors = () => {
   useEffect(() => {
     fetchDoctors();
     fetchDepartments();
-  }, [filters]);
+  }, [filters.department, filters.specialization]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchDoctors = async () => {
     try {

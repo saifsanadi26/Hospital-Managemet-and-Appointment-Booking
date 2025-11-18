@@ -26,10 +26,10 @@ const MedicalRecords = () => {
 
   useEffect(() => {
     fetchRecords();
-    if (user.role === 'doctor') {
+    if (user?.role === 'doctor') {
       fetchAppointments();
     }
-  }, [user.role]);
+  }, [user?.role]);
 
   const fetchRecords = async () => {
     try {
