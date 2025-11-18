@@ -21,7 +21,7 @@ const Navbar = () => {
           <span>Hospital Management</span>
         </Link>
 
-        <div className="navbar-menu">
+        <div className={`navbar-menu ${!isAuthenticated ? 'navbar-menu-guest' : ''}`}>
           {isAuthenticated ? (
             <>
               <Link to="/dashboard" className="nav-link">Dashboard</Link>
