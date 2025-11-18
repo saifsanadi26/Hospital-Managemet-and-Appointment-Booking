@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -41,67 +41,76 @@ const PublicRoute = ({ children }) => {
   return !isAuthenticated ? children : <Navigate to="/dashboard" />;
 };
 
+function AppLayout() {
+  const location = useLocation();
+  const showFooter = location.pathname === '/dashboard';
+
+  return (
+    <div className="App">
+      <Navbar />
+      <main style={{ minHeight: showFooter ? 'calc(100vh - 200px)' : '100vh' }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/appointments"
+            element={
+              <ProtectedRoute>
+                <Appointments />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/doctors"
+            element={
+              <ProtectedRoute>
+                <Doctors />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/medical-records"
+            element={
+              <ProtectedRoute>
+                <MedicalRecords />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </main>
+      {showFooter && <Footer />}
+    </div>
+  );
+}
+
 function AppContent() {
   return (
     <Router>
-      <div className="App">
-        <Navbar />
-        <main style={{ minHeight: 'calc(100vh - 200px)' }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/login"
-              element={
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <PublicRoute>
-                  <Register />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/appointments"
-              element={
-                <ProtectedRoute>
-                  <Appointments />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/doctors"
-              element={
-                <ProtectedRoute>
-                  <Doctors />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/medical-records"
-              element={
-                <ProtectedRoute>
-                  <MedicalRecords />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <AppLayout />
     </Router>
   );
 }

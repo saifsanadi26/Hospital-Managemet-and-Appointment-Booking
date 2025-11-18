@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { doctorAPI, appointmentAPI } from '../services/api';
 import { User, Stethoscope, Award, Calendar, Search, Filter, Clock } from 'lucide-react';
@@ -7,7 +6,6 @@ import './Doctors.css';
 
 const Doctors = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [departments, setDepartments] = useState([]);
