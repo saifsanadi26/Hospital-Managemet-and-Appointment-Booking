@@ -14,6 +14,7 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: nowrap;
+  padding: 0 40px;
 }
 
 .navbar-brand {
@@ -27,13 +28,17 @@
   font-family: 'Poppins', sans-serif;
   white-space: nowrap;
   flex-shrink: 0;
+  margin-right: 60px;
 }
 
 .navbar-menu {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
   flex-wrap: nowrap;
+  flex: 1;
+  justify-content: center;
+  margin-right: 100px;
 }
 
 .nav-link {
